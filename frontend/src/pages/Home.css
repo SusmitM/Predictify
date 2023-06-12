@@ -1,0 +1,47 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.homeTitle {
+    margin: 10px auto;
+}
+
+.uploadContainer {
+    margin: 3rem auto;
+
+}
+
+.uploadContainer label {
+    width: 100px;
+    height: 190px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home imageDetails {
+    margin: auto;
+}
+
+.label {
+    margin: auto;
+
+}
+.home-imageDetails{
+    width: 500px;
+    border: 1px solid black;
+    margin: auto;
+    padding: 1.2rem;
+    color: black;
+
+}
+.home-imageDetails img{
+    border-style: none;
+    height: fit-content;
+    width: 500px;
+
+}
+.predictBtn{
+    width: fit-content;
+    margin: 1.5rem auto 5rem auto;
+}

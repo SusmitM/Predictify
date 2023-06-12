@@ -1,0 +1,35 @@
+.resultTitle{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.resultContainer{
+    display: flex;
+    flex-direction: column;
+
+}
+.result-imgContainer{
+    margin: auto;
+}
+.result-imgContainer img{
+    max-width: 550px;
+    max-height: 550px;
+    border: 1px solid grey;
+}
+
+.result-textContainer{
+    margin: 2rem auto;
+}
+.result-textArea{
+   
+}
+
+@media (min-width: 1024px) {
+    .resultContainer{
+        flex-direction: row;
+    
+    }
+}
