@@ -28,7 +28,6 @@
 
 }
 .home-imageDetails{
-    width: 500px;
     border: 1px solid black;
     margin: auto;
     padding: 1.2rem;
@@ -36,12 +35,21 @@
 
 }
 .home-imageDetails img{
-    border-style: none;
-    height: fit-content;
-    width: 500px;
+    width: 280px;
+    height: 250px;
+  
 
 }
 .predictBtn{
     width: fit-content;
     margin: 1.5rem auto 5rem auto;
+}
+
+@media (min-width: 1024px) {
+    .home-imageDetails img{
+        width: 400px;
+        height: 350px;
+
+    
+    }
 }
