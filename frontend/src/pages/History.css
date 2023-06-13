@@ -1,0 +1,28 @@
+.historyContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+}
+
+.listContainer ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+@media (min-width: 1024px) {
+    .historyContainer {
+        flex-direction: row;
+
+    }
+    .listContainer ul {
+        display: flex;
+        flex-direction: row;
+
+    }
+}

@@ -76,7 +76,7 @@ export const Home = () => {
         colorScheme="green"
         onClick={()=> isAuthenticated ? submitImage(): navigate("/signin")}
       >
-        {isAuthenticated ?"Predict" :"Login"}
+        {isAuthenticated ?"Predict" :"SignIn"}
       </Button>
     </div>
   );

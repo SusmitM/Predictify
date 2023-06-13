@@ -30,7 +30,7 @@ export const Result = () => {
                 placeholder="Here is a sample placeholder"
                 size="m"
                 resize="verticle"
-                width="500px"
+                width="300px"
                 height="500px"
               >
                 {predictedText}

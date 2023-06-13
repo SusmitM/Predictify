@@ -9,14 +9,15 @@
 .resultContainer{
     display: flex;
     flex-direction: column;
+   
 
 }
 .result-imgContainer{
     margin: auto;
 }
 .result-imgContainer img{
-    max-width: 550px;
-    max-height: 550px;
+    width: 280px;
+    height: 250px;
     border: 1px solid grey;
 }
 
@@ -31,5 +32,14 @@
     .resultContainer{
         flex-direction: row;
     
+    }
+    .result-imgContainer img{
+        width: 400px;
+        height: 350px;
+       
+    }
+    
+    .result-textContainer{
+        margin: 2rem auto;
     }
 }

@@ -1,0 +1,24 @@
+.cardContainer{
+    display: flex;
+    flex-direction: column;
+    width: 283px;
+    height: 300px;
+    border:1px solid black;
+    margin: 10px;
+
+}
+.imgContainer {
+    width: 283px;
+    height: 250px;
+     border:1px solid black;
+
+}
+.imgContainer img{
+    width: 280px;
+    height: 200px;
+ 
+
+}
+.textContainer textarea{
+    width: 17.5rem;
+}

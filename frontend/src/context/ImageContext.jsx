@@ -12,6 +12,7 @@ export const ImageContextProvider = ({ children }) => {
 
   const [uploadedImg, setUploadedImg] = useState("");
   const [predictedText, setPredictedText] = useState("");
+  const [userData,setUserData]=useState([])
 
   //function to send predicted text and userData to server
   const sendData = async () => {
@@ -21,6 +22,7 @@ export const ImageContextProvider = ({ children }) => {
         name: user.name,
         email: user.email,
         predictedText: predictedText,
+        image:uploadedImg,
       });
     } catch (error) {
       console.error("Error sending data:", error);
@@ -49,6 +51,22 @@ export const ImageContextProvider = ({ children }) => {
     }
   }, [predictedText]);
 
+
+  useEffect(()=>{
+    const dbData = async()=>{
+      try{
+        const data= await axios.get(`https://predictify-backend.vercel.app/data`);
+      setUserData(data);
+      }
+      catch(e){
+        console.error(e)
+      }
+    
+    }
+    dbData()
+    
+  },[predictedText])
+
   return (
     <>
       <ImageContext.Provider
@@ -58,6 +76,7 @@ export const ImageContextProvider = ({ children }) => {
           setPredictedText,
           predictedText,
           uploadedImg,
+          userData
         }}
       >
         {children}

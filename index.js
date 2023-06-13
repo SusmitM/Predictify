@@ -1,15 +1,16 @@
 require('dotenv').config()
-const cors = require('cors');
+
 const express = require('express');
+const mongoose = require('mongoose');
+
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 
+const port = process.env.PORT || 8080;
 
 const app = express();
 const vision = require('@google-cloud/vision');
-
-const port = process.env.PORT || 8080;
-
 app.use(cors())
 app.use(bodyParser.json());
 
@@ -20,7 +21,26 @@ const CONFIG = {
   }
 };
 
-const client = new vision.ImageAnnotatorClient(CONFIG);
+async function main() {
+  await mongoose.connect(`mongodb+srv://predictify:${process.env.MongoPass}@predictify.7cxij8s.mongodb.net/`);
+  console.log('db connected')
+}
+
+const clientVision = new vision.ImageAnnotatorClient(CONFIG);
+
+main().catch(err => console.log(err));
+
+
+const userSchema = new mongoose.Schema({
+    username: String,
+    email: String,
+    predictedText: String,
+    image:String,
+});
+
+const User = mongoose.model('User', userSchema);
+
+
 
 
 // Get route for home
@@ -31,7 +51,6 @@ app.get('/', (req, res) => res.send({
 //POST route for text-prediction 
 app.post('/predict', async (req, res) => {
   const imageUrl = req.body.imgUrl;
-
 
   // Call detectText function with the URL and get the result
   const imgResult = await detectText(imageUrl);
@@ -44,14 +63,25 @@ app.post('/predict', async (req, res) => {
 
 
 app.post('/data', async (req, res) => {
-  console.log(req.body)
-  res.send(req.body)
+  let user = new User();
+  user.username = req.body.username;
+  user.email = req.body.email;
+  user.predictedText = req.body.predictedText;
+  user.image=req.body.image;
+  const doc = await user.save();
+
+  console.log(doc);
+  res.json(doc);
+})
+app.get('/data',async (req,res)=>{
+  const docs = await User.find({});
+  res.json(docs)
 })
 
 // //text detection
 const detectText = async (file_path) => {
 
-  let [result] = await client.textDetection(file_path);
+  let [result] = await clientVision.textDetection(file_path);
   return result.fullTextAnnotation.text
 };
 
