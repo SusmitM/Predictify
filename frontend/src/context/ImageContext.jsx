@@ -1,37 +1,65 @@
 /* eslint-disable no-unused-vars */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
+
+import { useAuthContext } from "./AuthContext";
 
 const ImageContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export const ImageContextProvider = ({ children }) => {
+  const { user } = useAuthContext();
+
   const [uploadedImg, setUploadedImg] = useState("");
   const [predictedText, setPredictedText] = useState("");
+
+  //function to send predicted text and userData to server
+  const sendData = async () => {
+    const url = "http://localhost:8080/data";
+    try {
+      await axios.post(url, {
+        name: user.name,
+        email: user.email,
+        predictedText: predictedText,
+      });
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
 
   //function to send the received img url to the backend
   const getPredictedText = async (receivedImageURL) => {
     setUploadedImg(receivedImageURL);
 
-    try {
-      const url = "https://predictify-backend.vercel.app/predict";
-      const headers = {
-        imgUrl: receivedImageURL,
-      };
-      // making a post request to the backend
-      const response = await axios.post(url, null, { headers });
+    const url = "http://localhost:8080/predict";
 
-      if(response.status===200){
-        //storing the text received from backend
+    try {
+      const response = await axios.post(url, {
+        imgUrl: receivedImageURL,
+      });
+
       setPredictedText(response.data.predictedText);
-      }
     } catch (error) {
-      console.error(error);
+      console.error("Error predicting text:", error);
     }
   };
+  useEffect(() => {
+    if (predictedText !== "") {
+      sendData(); // Call sendData function when predictedText is not empty
+    }
+  }, [predictedText]);
+
   return (
     <>
-      <ImageContext.Provider value={{ getPredictedText,setUploadedImg,setPredictedText,predictedText,uploadedImg }}>
+      <ImageContext.Provider
+        value={{
+          getPredictedText,
+          setUploadedImg,
+          setPredictedText,
+          predictedText,
+          uploadedImg,
+        }}
+      >
         {children}
       </ImageContext.Provider>
     </>

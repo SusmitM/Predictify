@@ -2,12 +2,14 @@ import "./Results.css";
 import { useImageContext } from "../context/ImageContext";
 import { Textarea, Text} from "@chakra-ui/react";
 export const Result = () => {
-  const { predictedText, uploadedImg } = useImageContext();
+  const { predictedText, uploadedImg} = useImageContext();
   return (
     <>
       {!predictedText.length > 0 && <div>Loading...</div>}
       {predictedText.length > 0 && (
+        
         <>
+        
           <Text
             margin="auto"
             className="resultTitle"
