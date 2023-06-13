@@ -16,7 +16,7 @@ export const ImageContextProvider = ({ children }) => {
 
   //function to send predicted text and userData to server
   const sendData = async () => {
-    const url = "https://predictify-backend.vercel.app/data";
+    const url = "https://predictify-backend.onrender.com/data";
     try {
       await axios.post(url, {
         name: user.name,
@@ -33,7 +33,7 @@ export const ImageContextProvider = ({ children }) => {
   const getPredictedText = async (receivedImageURL) => {
     setUploadedImg(receivedImageURL);
 
-    const url = "https://predictify-backend.vercel.app/predict";
+    const url = "https://predictify-backend.onrender.com/predict";
 
     try {
       const response = await axios.post(url, {
@@ -55,7 +55,7 @@ export const ImageContextProvider = ({ children }) => {
   useEffect(()=>{
     const dbData = async()=>{
       try{
-        const data= await axios.get(`https://predictify-backend.vercel.app/data`);
+        const data= await axios.get(`https://predictify-backend.onrender.com/data`);
       setUserData(data);
       }
       catch(e){
