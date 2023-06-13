@@ -1,25 +1,24 @@
 import "./Home.css";
+
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useImageContext } from "../context/ImageContext";
-import { Text, Button} from "@chakra-ui/react";
+import { Text, Button } from "@chakra-ui/react";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
-
-
 const fileTypes = ["JPEG", "PNG", "JPG"];
 
 export const Home = () => {
-  const {isAuthenticated}=useAuthContext();
+  const { isAuthenticated } = useAuthContext();
 
-  const { getPredictedText,setUploadedImg,setPredictedText } = useImageContext();
+  const { getPredictedText, setUploadedImg, setPredictedText } =
+    useImageContext();
 
   const [file, setFile] = useState("");
 
-  const navigate=useNavigate()
-
+  const navigate = useNavigate();
 
   const handleChange = (file) => {
     setFile(file);
@@ -35,15 +34,16 @@ export const Home = () => {
     data.append("upload_preset", "predictify");
     data.append("cloud_name", "djxqg0lar");
 
-     //navigate to results page
-     navigate("/result")
+    //navigate to results page
+    navigate("/result");
 
     //Sending the image to cloudinary
     fetch("https://api.cloudinary.com/v1_1/djxqg0lar/image/upload", {
       method: "post",
       body: data,
-    }).then((res) => res.json())
-    .then((imgData) => getPredictedText(imgData.secure_url));
+    })
+      .then((res) => res.json())
+      .then((imgData) => getPredictedText(imgData.secure_url));
   };
 
   return (
@@ -71,12 +71,12 @@ export const Home = () => {
         </Text>
       )}
       <Button
-      isDisabled={isAuthenticated && !file}
+        isDisabled={isAuthenticated && !file}
         className="predictBtn"
         colorScheme="green"
-        onClick={()=> isAuthenticated ? submitImage(): navigate("/signin")}
+        onClick={() => (isAuthenticated ? submitImage() : navigate("/signin"))}
       >
-        {isAuthenticated ?"Predict" :"SignIn"}
+        {isAuthenticated ? "Predict" : "SignIn"}
       </Button>
     </div>
   );

@@ -9,6 +9,10 @@ export const AuthContextProvider=({children})=>{
     const { user, isAuthenticated } = useAuth0();
       
 
+   
+   
+     
+
 
     return(
         <>
