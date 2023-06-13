@@ -23,7 +23,7 @@ export const History = () => {
   </Text>
   <div className="historyContainer">
    
-  {currentUserData.length===0 && <h1>No Previous Predicts Found</h1>}
+  {currentUserData.length===0 && <div className="title">No Previous Predicts Found</div>}
   {currentUserData.length>0 && <div  className="listContainer">
     <ul>
             {currentUserData.map(data => 

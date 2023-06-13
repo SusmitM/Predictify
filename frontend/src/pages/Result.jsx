@@ -1,15 +1,41 @@
 import "./Results.css";
 import { useImageContext } from "../context/ImageContext";
-import { Textarea, Text} from "@chakra-ui/react";
+import { Textarea, Text, Button } from "@chakra-ui/react";
+import { Circles } from "react-loader-spinner";
+import { useState } from "react";
 export const Result = () => {
-  const { predictedText, uploadedImg} = useImageContext();
+  const { predictedText, uploadedImg } = useImageContext();
+
+  const [speaking, setSpeaking] = useState(false);
+
+  const msg = new SpeechSynthesisUtterance();
+
+  const readText = () => {
+    setSpeaking((prev) => !prev);
+    msg.text = predictedText;
+    window.speechSynthesis.speak(msg);
+  };
+  const stopReading = () => {
+    setSpeaking((prev) => !prev);
+    speechSynthesis.cancel();
+  };
   return (
     <>
-      {!predictedText.length > 0 && <div>Loading...</div>}
+      {!predictedText.length > 0 && (
+        <div className="loader">
+          <Circles
+            height="100"
+            width="100"
+            color="#4fa94d"
+            ariaLabel="circles-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      )}
       {predictedText.length > 0 && (
-        
         <>
-        
           <Text
             margin="auto"
             className="resultTitle"
@@ -36,6 +62,17 @@ export const Result = () => {
                 {predictedText}
               </Textarea>
             </div>
+          </div>
+          <div className="buttonContainer">
+          <Button
+           
+            colorScheme={speaking ? "red" : "green"}
+            onClick={() => {
+              speaking ? stopReading() : readText();
+            }}
+          >
+            {speaking ? "Stop" : "Listen"}
+          </Button>
           </div>
         </>
       )}
