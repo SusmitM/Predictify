@@ -4,10 +4,12 @@ import { useAuthContext } from "../context/AuthContext";
 import { useImageContext } from "../context/ImageContext"
 import { Text} from "@chakra-ui/react";
 
+
 export const History = () => {
   const {userData}=useImageContext();
   const{user}=useAuthContext();
   const currentUserData=userData.data.filter(data=>data.email===user.email);
+
   
   return (
    <>

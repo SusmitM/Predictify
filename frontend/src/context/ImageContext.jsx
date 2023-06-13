@@ -65,7 +65,7 @@ export const ImageContextProvider = ({ children }) => {
     }
     dbData()
     
-  },[predictedText])
+  },[userData,predictedText])
 
   return (
     <>
