@@ -19,11 +19,18 @@ import {
   CloseIcon,
   ChevronDownIcon,
 } from '@chakra-ui/icons';
+
+import { useAuth0 } from "@auth0/auth0-react";
+
 import { useNavigate } from 'react-router-dom';
 
+import { useAuthContext } from '../../context/AuthContext';
+
 export const Navbar=()=> {
+  const{isAuthenticated}=useAuthContext();
   const navigate=useNavigate();
   const { isOpen, onToggle } = useDisclosure();
+  const { logout } = useAuth0();
  
 
   return (
@@ -69,14 +76,7 @@ export const Navbar=()=> {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            fontWeight={400}
-            variant={'link'}
-            onClick={()=>navigate('/signIn')}>
-            Sign In
-          </Button>
+       
           <Button
             as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
@@ -84,11 +84,11 @@ export const Navbar=()=> {
             fontWeight={600}
             color={'white'}
             bg={'pink.400'}
-            onClick={()=>navigate('/signUp')}
+            onClick={()=> {isAuthenticated ? logout({ logoutParams: { returnTo: window.location.origin } }) : navigate("/signin")}}
             _hover={{
               bg: 'pink.300',
             }}>
-            Sign Up
+            {isAuthenticated ? "Log-Out" : "SignIn"}
           </Button>
         </Stack>
       </Flex>

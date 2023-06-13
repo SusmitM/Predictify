@@ -5,12 +5,14 @@ import { useImageContext } from "../context/ImageContext";
 import { Text, Button} from "@chakra-ui/react";
 import { TriangleDownIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 
 
 const fileTypes = ["JPEG", "PNG", "JPG"];
 
 export const Home = () => {
+  const {isAuthenticated}=useAuthContext();
 
   const { getPredictedText,setUploadedImg,setPredictedText } = useImageContext();
 
@@ -69,12 +71,12 @@ export const Home = () => {
         </Text>
       )}
       <Button
-       isDisabled={file ? false:true }
+      isDisabled={isAuthenticated && !file}
         className="predictBtn"
         colorScheme="green"
-        onClick={()=>submitImage()}
+        onClick={()=> isAuthenticated ? submitImage(): navigate("/signin")}
       >
-        Predict
+        {isAuthenticated ?"Predict" :"Login"}
       </Button>
     </div>
   );
