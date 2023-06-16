@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
 }
-
 .homeTitle {
     margin: 10px auto;
 }
@@ -37,8 +36,6 @@
 .home-imageDetails img{
     width: 280px;
     height: 250px;
-  
-
 }
 .predictBtn{
     width: fit-content;

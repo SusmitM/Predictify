@@ -2,9 +2,11 @@ require('dotenv').config()
 
 const express = require('express');
 const mongoose = require('mongoose');
+const { spawn } = require('child_process');
 
 const cors = require('cors');
 const bodyParser = require('body-parser');
+
 
 
 const port = process.env.PORT || 8080;
@@ -12,6 +14,7 @@ const port = process.env.PORT || 8080;
 const app = express();
 const vision = require('@google-cloud/vision');
 app.use(cors())
+let imgresult;
 app.use(bodyParser.json());
 
 const CONFIG = {
@@ -55,7 +58,15 @@ app.post('/predict', async (req, res) => {
   // Call detectText function with the URL and get the result
   const imgResult = await detectText(imageUrl);
 
-  // Return the predicted text as a response
+  // Sending the received result from Google Vision for Post-Processing
+  const pythonProcess = spawn('python', ['processText.py', imgResult]);
+
+  // Collect the output from the Python script
+  pythonProcess.stdout.on('data', (data) => {
+    imgresult += data.toString();
+  });
+
+  // Return the post processed predicted text as a response
   res.json({
     predictedText: imgResult
   });
