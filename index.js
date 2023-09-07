@@ -1,9 +1,9 @@
-require('dotenv').config()
+
 
 const express = require('express');
 const mongoose = require('mongoose');
 const { spawn } = require('child_process');
-
+const dotenv =require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -19,15 +19,17 @@ app.use(bodyParser.json());
 
 const CONFIG = {
   credentials: {
-    private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCiqsneBPEna38p\n2YEX/QAnpk7lYO2+kdBqDpSsiA7jFW3tJm661yvCAZbRqXvcAH63AsoeQjs6jz98\nx78QBcH8iHRW8brJ1Q90+rSeyeIKVGE2VK65qiK6G7F+Mrj3puy7kXuW3n9XY7eO\ndQx361vVaOoXfHECGLqyXZ1/YHrzmcwqpu9ifFQ4Tc0AaVtvMpJnr238HT/hLwD1\nq4Nn2IqFAKNpZanTdSI85BGnJkopRpzpnQ6XVCMGomEp7bvElpoz2rwKbKFluuyA\n5Qfy7AyJwOdeXSn5MyQ/JsKdye399s03x6wcctJpWDP/wV+5QVcU2fLVs5qzr/AU\njk+yukqFAgMBAAECggEAEUBouV2vz7z0VxVkvg0Mg6f9LRGLFU90mZLjTKr/XTEM\nH/8X9kPUtbYibyj45Fu/FJy8n9npWywPESZECqh5qtUz9Xacl0Q75+2g00hY6zyI\ntNDlWPaEyVUfjWFGwakX6UqkH1uIiNWgBYE/acZxzl/al9QQTiceQcVw6y3pzETj\nl7r67n/RxxNO6AkYmlDzo1go51ajdTk7RHVFKr2LVku/MIyFf0GdNO7IrN3gOm6m\n/IIBaRMyeAxKrchnzV77lH3Gd/+7w61+SIfIAPbLi/dd6mFtSQ5FrVP/V2W3p21V\nLS1rXDjF7cggJGxAAiN2rhUZm9Kyv3krVv1GAvsL7wKBgQDRu/i32Glh2iR01Raq\nA1Fxi1TYoWjJVF6yPgHJhokSl67bX4m3+azUi+/vMOQAWHpUFkRdDYTEP2/o9vva\nOaKDYMSqwJ4UvLs6/mkzvgHcpijaIJXBPDDA2wTaEiKaPcOa6vqmUqP9viMpXWLO\nNQLSog+CMn2T70ON8q2B0Y44zwKBgQDGjNyQXDWFjUjkPyNzeTEvI//SDaatUvsN\nHOTfnS6cj+3bZrRd/09eCvibD/mUJkCaQUWB0dSw2VPGjlvFAZ2EgseUjAqhh1fo\nPbKiLhJL7Uiu8U2nvWmQbs6pfkNYWXU7c81juQtlLTjDrQSNyEFcMIBh6FoCMZ1S\nRTbTNfm0awKBgCxAwSXpX7Lp2C9elr2gnZqbj3d19yojxydMtgvTezCVGKvo6KIM\n6E6giCur4S/Be24qlJodtBnEWNSK6HEPIB8gV96/bZtqhwbXj1L/kF0CIjSEE5UG\nIjNPAyMQGIT66z7QvbpCTZ/IcprTvXlM7h+LWkJabOy92z8kKT/u+1c5AoGBAIh/\niJbaPZVeBzGbUoTtWWneJt5CskbQGHXwWkx84/GQZWaDWhaREgBGLJl1xxAZqCok\nG2PfXIhkMFr9vYtXy/GwcwLlr91SjZXE7MzgPYXjUCetDsT1y+AWvY76ldPkVFsW\nBqq7KWFaUH79sHbEqGJ3mZs1wMNnVo+bs9BKeCuXAoGBAI9U0mcRWR0OdM1YgosP\nNaXP1qOCZsFucnc4FWAVAe0lE0jtwzzup9xenE9MFD+sQ1ut3I0oGqegbk80p3Ls\njTKMoTO2eesF1UwckEQGsb7XWlxD8MsX+c02r/3/LHtUvEvoPisnflJf/kuS/Rdm\n22XpZs1sGZnc34WrRQy4xFQp\n-----END PRIVATE KEY-----\n",
-    client_email: process.env.EMAIL
+    private_key:"-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeOi8FgtnGXPAK\n5mVGMR27iZRxleC1F0TmKCfSIPiZUAhyj5FWyBxhjLEoxHZVtOF4MdFnmc5rP87b\nmDVMRgRSVTi0L3y6nZHM5qqRuHZVfyzyu4pdpC7E8g8Ad+4GSvzHd787jKleKW5s\nNM4uEwUOcuzOSMCaetUFuYeZjA28+8ua7959e4r5OOsQUUkaUXj2L+nIl56mCPqE\n8pJY/4dpeJgfCx3yYm19/E/2n4A2jbNMRjk21oYCLRIayFtOF8Vx5uZRh6KYys4Q\nE5ly1ClSc+6kB9jtWdnl8RpWZxpz8Yu9Gz3MvjzeuVtOnQDbxuLcFQBUUjgOd6PC\n8BTXk+7LAgMBAAECggEALlI2RdTC0HGQzIAakev7GlXyoTYRbLJ9Nyv2TGvem3N0\npaUmFVPMCzrW+mpZgknL4BYlicDbT0aE1oC+ya+NwFS2nvlv+Gn8rxGwSazI58qt\na/o/TZ6tGncKsUZq5mi5i+OgllxdkPVsID1tRsvGpS476UAfMppXFq/z5J29v984\n7Kloz9WzLm/EVh4dYHiz07Zw13CBA70cw/LwTTxB7PhQEjEP2wIMqPWoKqBjLGHl\nvKK3Al3lcv7visG9fJH7FfySMSnrZtclN8t/r9Ptn32G5dnkMMGLrfiit7yOTdZH\nAg+vCodoIq4FY6/UikEX5x9vG4YxUMdTUH6KIMV8oQKBgQDWmnD2EDz4S/3NBkjz\ncoU9v4e9udJlg/fa6n8k6I0/FJv21/htehjFk/duwMFKhQ38K8HrB55mRQOylTtf\neHSCJQshOUSJzdI0cq15EgBj0CLQ8oP/JGMo6cX5ZffjNgQfyVB95JT0O8EwoQpz\n3Dm+FjfKi4pE55TkMoD7tZ4qKQKBgQC8v8cFVoBCuSWf7A7aTer4QKJLM7Z1rj9W\nS7Q+p/kIMDf2c/h7oWK39zl2is10GhgeQwQVVB0zPAyLgSg2szFsqgY5ovmfVYt6\nzncUPro9f2SJzqVQh5YOGXBetm2xswS1GC7BKIWwXUoy7YytQrmnbN/t02KBMG5J\n7yUdrbGX0wKBgFLq9X59o7EkW3oeVY2K0CSdnmsWI08KAHhbZqjyGbEn22My61AR\nfwTIOTBX1ddfNZobph+ToAZP4C/eLUSkHBA1E+nQYMUF+5Q8Qv6mj/QA9ZLaQVoR\nyyaBvPayCWeG9Wz6sdkSuuLrO6f4cTt2+fCSURg3dkNNX2AUi3W2JNiRAoGBAJHE\ndfpcXH+rJzCDiND1ffKtT+lODaqCoG2P16rP5JZ7Tqzp0UwBThEPP/SZq6PvhxLP\n5LZoGIj55iJS4/CioRfvkxEuGSQBV8/G5dXfv8tAuC9pROiVXcCTyuGKd9rVi1wk\nSe9o0R5sXaJJLOyd7G0tux6bsqZc9b/pjbuG6fF7AoGAQtD+1L98H1As+GPzfIDR\nZt9Kc+MBm6VtuSeA94Qvfas5J4b/y9vyKWw86J3FZBvTzY9qXuWa9b2Lk1Xph4RK\nRlRhUNcVQxnMkTtnEvywFb5cuvylhe+mbTpelP1Mo6RrBygXH2ZQ8q1A8F7olT1s\ns4ULVo31pFmfWKBNP4MQqh8=\n-----END PRIVATE KEY-----\n",
+    client_email:process.env.EMAIL
   }
 };
 
 async function main() {
-  await mongoose.connect(`mongodb+srv://predictify:${process.env.MongoPass}@predictify.7cxij8s.mongodb.net/`);
+  await mongoose.connect(process.env.MONGO_URL);
+  
   console.log('db connected')
 }
+
 
 const clientVision = new vision.ImageAnnotatorClient(CONFIG);
 
@@ -91,9 +93,9 @@ app.get('/data',async (req,res)=>{
 
 // //text detection
 const detectText = async (file_path) => {
-
   let [result] = await clientVision.textDetection(file_path);
   return result.fullTextAnnotation.text
+  
 };
 
 // For predicting the image text
