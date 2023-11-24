@@ -60,8 +60,8 @@ export const Navbar=()=> {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
+           fontSize="xl" fontWeight="bold"
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
            Predictify
           </Text>

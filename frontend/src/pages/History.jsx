@@ -1,14 +1,38 @@
 import "./History.css"
 import Card from "../components/card/Card";
 import { useAuthContext } from "../context/AuthContext";
-import { useImageContext } from "../context/ImageContext"
+
+import axios from "axios";
 import { Text} from "@chakra-ui/react";
+import { useState,useEffect } from "react";
 
 
 export const History = () => {
-  const {userData}=useImageContext();
+ 
+  const [currentUserData,setCurrentUserData]=useState([]);
+
+  
   const{user}=useAuthContext();
-  const currentUserData=userData.data.filter(data=>data.email===user.email);
+ 
+
+  useEffect(()=>{
+    const dbData = async()=>{
+      try{
+        const allUserData= await axios.get(`https://predictify-backend.onrender.com/data`);
+
+        const dataToShow=allUserData.data.filter(data=>data.email===user.email);
+
+        setCurrentUserData(dataToShow);
+
+      }
+      catch(e){
+        console.error(e)
+      }
+    
+    }
+    dbData()
+    
+  },[])
 
   
   return (

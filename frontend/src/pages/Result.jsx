@@ -55,12 +55,13 @@ export const Result = () => {
                 className="result-textArea"
                 placeholder="Here is a sample placeholder"
                 size="m"
-                resize="verticle"
+                resize="vertical"
                 width="300px"
                 height="500px"
-              >
-                {predictedText}
-              </Textarea>
+                value={predictedText}
+                readOnly
+                />
+                
             </div>
           </div>
           <div className="buttonContainer">

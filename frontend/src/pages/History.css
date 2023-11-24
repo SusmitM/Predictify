@@ -1,9 +1,8 @@
 .historyContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 90%;
+   justify-items: center;
     margin: auto;
   }
   .title{
@@ -29,7 +28,7 @@
     .listContainer ul {
       flex-direction: row; 
       flex-wrap: wrap; 
-      justify-content: flex-start;
+      justify-items: center;
     }
   }
   

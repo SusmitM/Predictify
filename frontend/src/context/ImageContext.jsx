@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { createContext, useContext, useState, useEffect } from "react";
+
 import axios from "axios";
 
 import { useAuthContext } from "./AuthContext";
@@ -12,7 +13,7 @@ export const ImageContextProvider = ({ children }) => {
 
   const [uploadedImg, setUploadedImg] = useState("");
   const [predictedText, setPredictedText] = useState("");
-  const [userData,setUserData]=useState([])
+ 
 
   //function to send predicted text and userData to server
   const sendData = async () => {
@@ -28,7 +29,7 @@ export const ImageContextProvider = ({ children }) => {
       console.error("Error sending data:", error);
     }
   };
-
+  
   //function to send the received img url to the backend
   const getPredictedText = async (receivedImageURL) => {
     setUploadedImg(receivedImageURL);
@@ -52,20 +53,7 @@ export const ImageContextProvider = ({ children }) => {
   }, [predictedText]);
 
 
-  useEffect(()=>{
-    const dbData = async()=>{
-      try{
-        const data= await axios.get(`https://predictify-backend.onrender.com/data`);
-      setUserData(data);
-      }
-      catch(e){
-        console.error(e)
-      }
-    
-    }
-    dbData()
-    
-  },[userData,predictedText])
+ 
 
   return (
     <>
@@ -76,7 +64,7 @@ export const ImageContextProvider = ({ children }) => {
           setPredictedText,
           predictedText,
           uploadedImg,
-          userData
+       
         }}
       >
         {children}

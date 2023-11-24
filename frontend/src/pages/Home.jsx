@@ -81,3 +81,5 @@ export const Home = () => {
     </div>
   );
 };
+
+//useState useEffect useReducer useContext useMemo useCallback useRef
